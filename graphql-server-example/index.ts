@@ -1,6 +1,9 @@
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema';
+import { AuthenticationError } from 'apollo-server-errors';
+import { Context } from './types/context';
+import { Resolvers } from './types/generated/graphql';
 
 const { ApolloServer } = require('apollo-server');
 
@@ -19,7 +22,7 @@ const schema = loadSchemaSync('./schema/schema.graphql', {
   loaders: [new GraphQLFileLoader()],
 });
 
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
     books: () => books,
   },
@@ -27,9 +30,28 @@ const resolvers = {
 
 const schemaWithResolvers = addResolversToSchema({ schema, resolvers });
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
-const server = new ApolloServer({ schema: schemaWithResolvers });
+const getUser = (token?: string): Context['user'] => {
+  if (token === undefined) {
+    throw new AuthenticationError('認証されていないユーザーはリソースにアクセスできません');
+  }
+
+  // TODO: Tokenからユーザー情報を取り出す処理
+
+  return {
+    name: 'dummy name',
+    email: 'dummy@example.com',
+    token,
+  };
+};
+
+const server = new ApolloServer({
+  schema: schemaWithResolvers,
+  context: ({ req }) =>
+    ({
+      user: getUser(req.headers.authorization),
+    } as Context),
+  debug: true,
+});
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {

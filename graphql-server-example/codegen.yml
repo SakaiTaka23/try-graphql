@@ -1,0 +1,10 @@
+overwrite: true
+generates:
+  ./types/generated/graphql.ts:
+    schema: schema/schema.graphql
+    config:
+      useIndexSignature: true
+      contextType: ../context
+    plugins:
+      - typescript
+      - typescript-resolvers
