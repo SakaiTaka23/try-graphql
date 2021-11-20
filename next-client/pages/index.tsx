@@ -4,11 +4,14 @@ import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
   const EXCHANGE_RATES = gql`
-    query GetExchangeRates {
-      rates(currency: "USD") {
-        currency
-        rate
+    query Donations($orderBy: OrderByParams) {
+      donations(orderBy: $orderBy) {
+        id
+        count
+        displayName
+        createdAt
       }
+      totalDonations
     }
   `;
 
@@ -17,13 +20,8 @@ const Home: NextPage = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return data.rates.map(({ currency, rate }) => (
-    <div key={currency}>
-      <p>
-        {currency}: {rate}
-      </p>
-    </div>
-  ));
+  console.log(data);
+  return <h1>hi</h1>;
 };
 
 export default Home;
