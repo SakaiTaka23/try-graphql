@@ -32,7 +32,7 @@ yarn add @apollo/client graphql
 - GraphQL Code Generatorを使う
 ```shell
 yarn add -D @graphql-codegen/cli
-# 入ってる気がする
+# 自動的に入ってる気がする
 yarn add -D @graphql-codegen/typescript
 ```
 - 初期化
@@ -46,3 +46,7 @@ yarn generate
 ```
 
 - documentsに実行したいクエリを書き出すと自動でカスタムフックを作ってくれる
+- 引数はフックの中に入れる
+  - オブジェクトの中にvariablesその中に入れたい引数を定義
+
+
