@@ -1,0 +1,9 @@
+query Donations($orderBy: OrderByParams) {
+  donations(orderBy: $orderBy) {
+    id
+    count
+    displayName
+    createdAt
+  }
+  totalDonations
+}
