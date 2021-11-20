@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import type { NextPage } from 'next';
+import { Donation } from '../graphql/generated';
 
 const Home: NextPage = () => {
   const EXCHANGE_RATES = gql`
@@ -15,7 +16,7 @@ const Home: NextPage = () => {
     }
   `;
 
-  const { data, loading, error } = useQuery(EXCHANGE_RATES);
+  const { data, loading, error } = useQuery<Donation>(EXCHANGE_RATES);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
