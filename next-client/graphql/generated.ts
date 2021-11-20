@@ -81,6 +81,13 @@ export type Subscription = {
   totalUpdated?: Maybe<Result>;
 };
 
+export type CreateDonationMutationVariables = Exact<{
+  createDonationInput: CreateDonationInput;
+}>;
+
+
+export type CreateDonationMutation = { __typename?: 'Mutation', createDonation: { __typename?: 'Donation', id: number, count: number, displayName: string, email: string } };
+
 export type DonationsQueryVariables = Exact<{
   orderBy?: InputMaybe<OrderByParams>;
 }>;
@@ -89,6 +96,42 @@ export type DonationsQueryVariables = Exact<{
 export type DonationsQuery = { __typename?: 'Query', totalDonations: number, donations: Array<{ __typename?: 'Donation', id: number, count: number, displayName: string, createdAt?: any | null | undefined } | null | undefined> };
 
 
+export const CreateDonationDocument = gql`
+    mutation CreateDonation($createDonationInput: CreateDonationInput!) {
+  createDonation(createDonationInput: $createDonationInput) {
+    id
+    count
+    displayName
+    email
+  }
+}
+    `;
+export type CreateDonationMutationFn = Apollo.MutationFunction<CreateDonationMutation, CreateDonationMutationVariables>;
+
+/**
+ * __useCreateDonationMutation__
+ *
+ * To run a mutation, you first call `useCreateDonationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateDonationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createDonationMutation, { data, loading, error }] = useCreateDonationMutation({
+ *   variables: {
+ *      createDonationInput: // value for 'createDonationInput'
+ *   },
+ * });
+ */
+export function useCreateDonationMutation(baseOptions?: Apollo.MutationHookOptions<CreateDonationMutation, CreateDonationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateDonationMutation, CreateDonationMutationVariables>(CreateDonationDocument, options);
+      }
+export type CreateDonationMutationHookResult = ReturnType<typeof useCreateDonationMutation>;
+export type CreateDonationMutationResult = Apollo.MutationResult<CreateDonationMutation>;
+export type CreateDonationMutationOptions = Apollo.BaseMutationOptions<CreateDonationMutation, CreateDonationMutationVariables>;
 export const DonationsDocument = gql`
     query Donations($orderBy: OrderByParams) {
   donations(orderBy: $orderBy) {

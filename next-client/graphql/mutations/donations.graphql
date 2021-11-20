@@ -1,0 +1,8 @@
+mutation CreateDonation($createDonationInput: CreateDonationInput!) {
+  createDonation(createDonationInput: $createDonationInput) {
+    id
+    count
+    displayName
+    email
+  }
+}

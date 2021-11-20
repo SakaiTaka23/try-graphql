@@ -1,19 +1,8 @@
-import { gql, useMutation } from '@apollo/client';
 import React from 'react';
-
-const CREATE_DONATION = gql`
-  mutation CreateDonation($createDonationInput: CreateDonationInput!) {
-    createDonation(createDonationInput: $createDonationInput) {
-      id
-      count
-      displayName
-      email
-    }
-  }
-`;
+import { useCreateDonationMutation } from '../graphql/generated';
 
 const Create = () => {
-  const [createDonation, { data, loading, error }] = useMutation(CREATE_DONATION);
+  const [createDonation, { data, loading, error }] = useCreateDonationMutation();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
