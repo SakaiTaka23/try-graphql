@@ -21,3 +21,23 @@
 
 
 
+# Yarn Work Space
+
+
+
+## Setup
+```shell
+git init
+yarn init -y
+```
+
+- .gitignore追加
+```.gitignore
+node_modules
+```
+
+- package.jsonにプライベートとワークスペースを追加
+```json
+"private":true,
+"workspaces":["frontend", "backend"]
+```
