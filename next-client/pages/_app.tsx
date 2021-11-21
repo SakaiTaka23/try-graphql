@@ -5,6 +5,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const client = new ApolloClient({
     uri: 'http://localhost:5000/graphql',
     cache: new InMemoryCache(),
+    connectToDevTools: true,
   });
   return (
     <ApolloProvider client={client}>
