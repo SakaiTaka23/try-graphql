@@ -1,0 +1,20 @@
+type Todo {
+  id: Int!
+  task: String!
+  detail: String
+  isCompleted: Boolean!
+}
+
+input CreateTodoInput {
+  task: String!
+  detail: String
+}
+
+type Query {
+  todos: [Todo]!
+  todo(id: Int!): Todo
+}
+
+type Mutation {
+  createTodo(createTodoInput: CreateTodoInput!): Todo!
+}
