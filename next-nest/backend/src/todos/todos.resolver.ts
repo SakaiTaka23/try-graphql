@@ -20,4 +20,9 @@ export class TodosResolver {
   findOne(@Args('id') id: number) {
     return this.todosService.findOne(id);
   }
+
+  @Mutation('toggleTodoCompleted')
+  toggle(@Args('id') id: number) {
+    return this.todosService.toggle(id);
+  }
 }

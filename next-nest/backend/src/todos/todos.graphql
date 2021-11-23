@@ -17,4 +17,5 @@ type Query {
 
 type Mutation {
   createTodo(createTodoInput: CreateTodoInput!): Todo!
+  toggleTodoCompleted(id: Int!): Todo
 }

@@ -23,4 +23,16 @@ export class TodosService {
       },
     });
   }
+
+  async toggle(id: number) {
+    const isCompleted = await this.findOne(id);
+    return this.prisma.todo.update({
+      where: {
+        id,
+      },
+      data: {
+        isCompleted: !isCompleted.isCompleted,
+      },
+    });
+  }
 }
