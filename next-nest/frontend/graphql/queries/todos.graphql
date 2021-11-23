@@ -1,0 +1,17 @@
+query Todo($todoId: Int!) {
+  todo(id: $todoId) {
+    id
+    task
+    detail
+    isCompleted
+  }
+}
+
+query Todos {
+  todos {
+    id
+    task
+    detail
+    isCompleted
+  }
+}

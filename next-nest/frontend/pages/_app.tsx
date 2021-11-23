@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -7,7 +7,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     cache: new InMemoryCache(),
     connectToDevTools: true,
   });
-  return <Component {...pageProps} />;
+  return (
+    <ApolloProvider client={client}>
+      <Component {...pageProps} />;
+    </ApolloProvider>
+  );
 }
 
 export default MyApp;

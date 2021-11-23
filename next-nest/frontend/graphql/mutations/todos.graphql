@@ -1,0 +1,17 @@
+mutation CreateTodo($createTodoInput: CreateTodoInput!) {
+  createTodo(createTodoInput: $createTodoInput) {
+    id
+    task
+    detail
+    isCompleted
+  }
+}
+
+mutation ToggleTodoCompleted($toggleTodoCompletedId: Int!) {
+  toggleTodoCompleted(id: $toggleTodoCompletedId) {
+    id
+    task
+    detail
+    isCompleted
+  }
+}
