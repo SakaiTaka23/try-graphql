@@ -74,12 +74,12 @@ export type TodoQueryVariables = Exact<{
 }>;
 
 
-export type TodoQuery = { __typename?: 'Query', todo?: { __typename?: 'Todo', id: number, task: string, detail?: string | null | undefined, isCompleted: boolean } | null | undefined };
+export type TodoQuery = { __typename?: 'Query', todo?: { __typename?: 'Todo', task: string, detail?: string | null | undefined, isCompleted: boolean } | null | undefined };
 
 export type TodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TodosQuery = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: number, task: string, detail?: string | null | undefined, isCompleted: boolean } | null | undefined> };
+export type TodosQuery = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: number, task: string, isCompleted: boolean } | null | undefined> };
 
 
 export const CreateTodoDocument = gql`
@@ -157,7 +157,6 @@ export type ToggleTodoCompletedMutationOptions = Apollo.BaseMutationOptions<Togg
 export const TodoDocument = gql`
     query Todo($todoId: Int!) {
   todo(id: $todoId) {
-    id
     task
     detail
     isCompleted
@@ -197,7 +196,6 @@ export const TodosDocument = gql`
   todos {
     id
     task
-    detail
     isCompleted
   }
 }

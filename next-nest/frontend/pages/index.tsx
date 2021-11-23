@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import { useTodosQuery } from '../graphql/generated';
 
 const Home: NextPage = () => {
@@ -22,7 +23,9 @@ const Home: NextPage = () => {
                 <td>
                   <input type='checkbox' checked={todo?.isCompleted} readOnly />
                 </td>
-                <td>{todo?.task}</td>
+                <td>
+                  <Link href={`/todo/${todo?.id}`}>{todo?.task}</Link>
+                </td>
               </tr>
             );
           })}
