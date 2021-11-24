@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import {
   TodosDocument,
+  TodosQuery,
   useCreateTodoMutation,
   useTodosQuery,
   useToggleTodoCompletedMutation,
@@ -16,11 +17,23 @@ const Home: NextPage = () => {
         detail: '頑張る',
       },
     },
-    refetchQueries: [{ query: TodosDocument }],
+    update(cache, { data }) {
+      const newTodo = data?.createTodo;
+      const existingTodos = cache.readQuery<TodosQuery>({
+        query: TodosDocument,
+      });
+
+      if (existingTodos && newTodo) {
+        cache.writeQuery({
+          query: TodosDocument,
+          data: {
+            todos: [...existingTodos.todos, newTodo],
+          },
+        });
+      }
+    },
   });
-  const [toggleTodoComplete] = useToggleTodoCompletedMutation({
-    refetchQueries: [{ query: TodosDocument }],
-  });
+  const [toggleTodoComplete] = useToggleTodoCompletedMutation();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
