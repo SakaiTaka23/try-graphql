@@ -1,6 +1,11 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { TodosDocument, useCreateTodoMutation, useTodosQuery } from '../graphql/generated';
+import {
+  TodosDocument,
+  useCreateTodoMutation,
+  useTodosQuery,
+  useToggleTodoCompletedMutation,
+} from '../graphql/generated';
 
 const Home: NextPage = () => {
   const { data, loading, error, refetch } = useTodosQuery();
@@ -11,6 +16,9 @@ const Home: NextPage = () => {
         detail: '頑張る',
       },
     },
+    refetchQueries: [{ query: TodosDocument }],
+  });
+  const [toggleTodoComplete] = useToggleTodoCompletedMutation({
     refetchQueries: [{ query: TodosDocument }],
   });
 
@@ -30,7 +38,17 @@ const Home: NextPage = () => {
             return (
               <tr key={todo?.id}>
                 <td>
-                  <input type='checkbox' checked={todo?.isCompleted} readOnly />
+                  <input
+                    type='checkbox'
+                    checked={todo?.isCompleted}
+                    onChange={() =>
+                      toggleTodoComplete({
+                        variables: {
+                          toggleTodoCompletedId: Number(todo?.id),
+                        },
+                      })
+                    }
+                  />
                 </td>
                 <td>
                   <Link href={`/todo/${todo?.id}`}>{todo?.task}</Link>
