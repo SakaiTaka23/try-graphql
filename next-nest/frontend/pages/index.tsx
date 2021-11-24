@@ -1,9 +1,18 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { useTodosQuery } from '../graphql/generated';
+import { TodosDocument, useCreateTodoMutation, useTodosQuery } from '../graphql/generated';
 
 const Home: NextPage = () => {
-  const { data, loading, error } = useTodosQuery();
+  const { data, loading, error, refetch } = useTodosQuery();
+  const [createTodo] = useCreateTodoMutation({
+    variables: {
+      createTodoInput: {
+        task: 'プログラミング',
+        detail: '頑張る',
+      },
+    },
+    refetchQueries: [{ query: TodosDocument }],
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -31,6 +40,14 @@ const Home: NextPage = () => {
           })}
         </tbody>
       </table>
+      <button
+        onClick={() => {
+          createTodo();
+          refetch();
+        }}
+      >
+        TODO追加
+      </button>
     </>
   );
 };
